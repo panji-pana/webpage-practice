@@ -1,13 +1,22 @@
 const express = require('express');
 const path = require('path')
 const hbs = require('hbs')
+const sqlite3 = require("sqlite3").verbose();
+const bodyParser = require('body-parser');
+const dbFile = "private/data/sqlite.db";
+
+
 // loads our libraries
 
 const app = express();
 
+const bcrypt = require('bcrypt')
+const saltRounds = 10
+
 const publicDirectoryPath = (path.join(__dirname,'public'))
-const viewsPath = path.join(__dirname,'/templates/views')
-const partialsPath = path.join(__dirname,'/templates/partials')
+const viewsPath = path.join(__dirname,'public/templates/views')
+const partialsPath = path.join(__dirname,'public/templates/partials')
+const utilitiesPath = path.join(__dirname,'public/utilities')
 
 app.set('view engine','hbs')
 app.set('views',viewsPath)
@@ -18,6 +27,67 @@ app.use(express.static(publicDirectoryPath))
 // app.get('',(req,res)=> {
 // 	res.status(200).send('default-IsabelleWestcott')
 // })
+
+// creates a table of users/passcodes unless one already exists
+const db = new sqlite3.Database(dbFile, err => {
+  if (err) {
+    console.log(err.message);
+  } else {
+    console.log("Successful connection to the database");
+    // const sql_create = `DROP TABLE IF EXISTS Users`
+    const sql_create = `CREATE TABLE IF NOT EXISTS Users (User_ID INTEGER PRIMARY KEY AUTOINCREMENT,Username VARCHAR(100) NOT NULL,Password VARCHAR(100) NOT NULL);`;
+    db.run(sql_create, err => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        console.log("Successful creation of the 'users' table");
+      }
+    });
+  }
+});
+
+app.use(express.static('public'))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// /* gets the data in the body from the html file */
+// app.get('/', (req, res) => {
+//   res.sendFile(process.cwd() + '/public/index.html')
+// })
+
+/*
+requests the username and password from the html file
+then hashes them
+*/
+app.post("/signup", (req, res) => {
+  const user = req.body.username;
+  const pass = req.body.password;
+  bcrypt.hash(pass, saltRounds, function(err, hash) {
+    // console.log(hash)
+    const sql = "INSERT INTO Users (Username, Password) VALUES (?, ?)";
+    const newuser = [req.body.username, req.body.password];
+    db.run(sql, [user, hash], err => {
+      if (err) {
+        return console.error(err.message);
+      } else {window.location.href = '/public/templates/views/thanks.hbs'}
+
+    });
+  });
+  // console.log(pass)
+  // res.redirect("/thankyou")
+})
+
+/* gets the whole users database and formats it as a json file */
+app.get("/getusers", (req, res) => {
+  const sql = "SELECT * FROM Users"
+  db.all(sql, (err, rows) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.json(rows);
+  })
+})
+
 
 app.get('',(req,res)=> {
 	res.render('index',{
@@ -43,6 +113,25 @@ app.get('/leave',(req,res)=>{
 	res.render('leave')
 })
 
+app.get('/test',(req,res)=>{
+	res.render('menuTest')
+})
+
+app.get('/login',(req,res)=>{
+	res.render('signIn')
+})
+
+app.get('/newAccount',(req,res)=>{
+	res.render('signUp')
+})
+
+app.get('/thanks',(req,res)=>{
+	res.render('thanks')
+})
+
+app.get('/andy',(req,res)=>{
+	res.render('andy')
+})
 
 app.listen(3000,()=> {
 	console.log('server is up')
