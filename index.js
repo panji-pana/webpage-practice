@@ -4,6 +4,8 @@ const hbs = require('hbs')
 const sqlite3 = require("sqlite3").verbose();
 const bodyParser = require('body-parser');
 const dbFile = "private/data/sqlite.db";
+const fs = require('fs')
+const http = require('http')
 
 const port = 5000;
 
@@ -141,10 +143,41 @@ app.get('/autumn', (req, res) => {
     res.status(200).send('For now this is just in my API as a request but later I\'m gonna build an entire webpage dedicated to my love for you. Because it is so large I can not type it but maybe I can show it')
 })
 
-app.listen(process.env.PORT || port, () => { //server starts listening for any attempts from a client to connect at port: {port}
-    console.log(`Now listening on port ${port}`);
-});
+http.createServer(function(req, res) {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
 
-// app.listen(process.env.PORT 3000, () => {
-//     console.log('server is up')
-// });
+    // req.url stores the path in the url
+    var url = req.url;
+    if (url === "/") {
+        // fs.readFile looks for the html file
+        // the first parameter is the path to the html page
+        // the second is the call back function
+        // if no file is found the function gives an err
+        // if the file is successfully found, the content of the file are contained in pgres
+        fs.readFile("index.hbs", function(err, pgres) {
+            if (err)
+                res.write("index.hbs NOT FOUND");
+            else {
+                // The following 3 lines
+                // are responsible for sending the html file
+                // and ends the response process
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.write(pgres);
+                res.end();
+            }
+        });
+    } // else if (url === "/tailPage") {
+    //     fs.readFile("tail.html", function(err, pgres) {
+    //         if (err)
+    //             res.write("TAIL.HTML NOT FOUND");
+    //         else {
+    //             res.writeHead(200, { 'Content-Type': 'text/html' });
+    //             res.write(pgres);
+    //             res.end();
+    //         }
+    //     });
+    // }
+
+}).listen(process.env.PORT || port, function() {
+    console.log("SERVER STARTED PORT: $(port)");
+});
