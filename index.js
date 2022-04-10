@@ -27,9 +27,6 @@ hbs.registerPartials(partialsPath)
 app.use(express.static(publicDirectoryPath))
     // Tells 'express' that you're utilising HBS and the folder structure for which you've set up your HBS paths
 
-// app.get('',(req,res)=> {
-// 	res.status(200).send('default-IsabelleWestcott')
-// })
 
 // creates a table of users/passcodes unless one already exists
 const db = new sqlite3.Database(dbFile, err => {
@@ -76,8 +73,6 @@ app.post("/signup", (req, res) => {
 
         });
     });
-    // console.log(pass)
-    // res.redirect("/thankyou")
 })
 
 /* gets the whole users database and formats it as a json file */
@@ -93,9 +88,9 @@ app.get("/getusers", (req, res) => {
 
 // load webpages
 
-app.get('' || '/' || '/home', (req, res) => {
+app.listen(app.get('' || '/' || '/home', (req, res) => {
     res.render('index')
-})
+}));
 
 // app.get('/home', (req, res) => {
 //     res.render('index', {})
