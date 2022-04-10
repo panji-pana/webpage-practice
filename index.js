@@ -91,13 +91,13 @@ app.get("/getusers", (req, res) => {
 
 // load webpages
 
-app.get('', (req, res) => {
+app.get('' || '/' || '/home', (req, res) => {
     res.render('index', {})
 })
 
-app.get('/home', (req, res) => {
-    res.render('index', {})
-})
+// app.get('/home', (req, res) => {
+//     res.render('index', {})
+// })
 
 app.get('/news', (req, res) => {
         res.render('news')
