@@ -133,10 +133,18 @@ app.get('/andy', (req, res) => {
     res.render('andy')
 })
 
+app.get(('/redacted'), (req, res) => {
+    res.render('redacted')
+})
+
+app.get('/autumn', (req, res) => {
+    res.status(200).send('For now this is just in my API as a request but later I\'m gonna build an entire webpage dedicated to my love for you. Because it is so large I can not type it but maybe I can show it')
+})
+
 app.listen(port, () => { //server starts listening for any attempts from a client to connect at port: {port}
     console.log(`Now listening on port ${port}`);
 });
 
-app.listen(3000, () => {
-    console.log('server is up')
-});
+// app.listen(3000, () => {
+//     console.log('server is up')
+// });
