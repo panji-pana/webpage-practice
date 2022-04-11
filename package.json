@@ -19,7 +19,8 @@
         "sqlite3": "^4.2.0"
     },
     "engines": {
-        "node": "17.x"
+        "node": "17.x",
+        "npm": "8.x"
     },
     "repository": {
         "type": "git",
