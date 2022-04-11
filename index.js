@@ -123,8 +123,6 @@ app.get(('/redacted'), (req, res) => {
     res.render('redacted')
 })
 
-
-
 app.get('/autumn', (req, res) => {
     res.status(200).send('For now this is just in my API as a request but later I\'m gonna build an entire webpage dedicated to my love for you. Because it is so large I can not type it but maybe I can show it')
 })
