@@ -4,8 +4,6 @@ const hbs = require('hbs')
 const sqlite3 = require("sqlite3").verbose();
 const bodyParser = require('body-parser');
 const dbFile = "private/data/sqlite.db";
-const fs = require('fs')
-const http = require('http')
 
 const port = 5000;
 
