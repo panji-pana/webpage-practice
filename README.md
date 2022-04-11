@@ -27,7 +27,7 @@ $ heroku open
 
 ## Problems I ran into that you might be searching for
 ∙ Heroku seems to not be super great with bcrypt. You can find a ton of examples of solution [here](https://github.com/kelektiv/node.bcrypt.js/issues/755).</br>
-∙ If you are receiving "error: src refspec master does not match any" change "git push heroku master" to "git push heroku HEAD:master"
+∙ If you are receiving "error: src refspec master does not match any" change ```$git push heroku master```</br> to ```$git push heroku HEAD:master```
 
 ## Other documentation
 ∙[Getting Started with Node.js on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)</br>
