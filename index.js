@@ -48,10 +48,6 @@ app.use(express.static('public'))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// /* gets the data in the body from the html file */
-// app.get('/', (req, res) => {
-//   res.sendFile(process.cwd() + '/public/index.html')
-// })
 
 /*
 requests the username and password from the html file
@@ -88,10 +84,6 @@ app.get("/getusers", (req, res) => {
 app.get('' || '/' || '/home', (req, res) => {
     res.render('index')
 });
-
-// app.get('/home', (req, res) => {
-//     res.render('index', {})
-// })
 
 app.get('/news', (req, res) => {
         res.render('news')
@@ -130,6 +122,8 @@ app.get('/andy', (req, res) => {
 app.get(('/redacted'), (req, res) => {
     res.render('redacted')
 })
+
+
 
 app.get('/autumn', (req, res) => {
     res.status(200).send('For now this is just in my API as a request but later I\'m gonna build an entire webpage dedicated to my love for you. Because it is so large I can not type it but maybe I can show it')
