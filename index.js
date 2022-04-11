@@ -87,10 +87,9 @@ app.get("/getusers", (req, res) => {
 })
 
 // load webpages
-
-app.listen(app.get('' || '/' || '/home', (req, res) => {
+app.get('' || '/' || '/home', (req, res) => {
     res.render('index')
-}));
+});
 
 // app.get('/home', (req, res) => {
 //     res.render('index', {})
@@ -138,6 +137,6 @@ app.get('/autumn', (req, res) => {
     res.status(200).send('For now this is just in my API as a request but later I\'m gonna build an entire webpage dedicated to my love for you. Because it is so large I can not type it but maybe I can show it')
 })
 
-// listen(process.env.PORT || port, function() {
-//     console.log("SERVER STARTED PORT: $(port)");
-// });
+app.listen(process.env.PORT || port, function() {
+    console.log("SERVER STARTED PORT: $(port)");
+});

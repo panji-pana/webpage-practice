@@ -7,7 +7,7 @@
         "start": "node index.js"
     },
     "keywords": [],
-    "author": "",
+    "author": "Isabelle Westcott",
     "license": "ISC",
     "dependencies": {
         "bcrypt": "^5.0.1",
@@ -18,6 +18,9 @@
         "sqlite-async": "^1.1.0",
         "sqlite3": "^4.2.0"
     },
+    "engines": {
+        "node": "17.x"
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/panji-pana/webpage-practice.git"
@@ -26,5 +29,5 @@
         "url": "https://github.com/panji-pana/webpage-practice/issues"
     },
     "homepage": "https://github.com/panji-pana/webpage-practice#readme",
-    "description": ""
+    "description": "Trying to push a git page to a heroku site"
 }
