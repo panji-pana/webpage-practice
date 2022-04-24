@@ -1,23 +1,23 @@
-const express = require('express');
-const path = require('path')
-const hbs = require('hbs')
-const sqlite3 = require("sqlite3").verbose();
-const bodyParser = require('body-parser');
-const dbFile = "private/data/sqlite.db";
+var express = require('express');
+var path = require('path')
+var hbs = require('hbs')
+var sqlite3 = require("sqlite3").verbose();
+var bodyParser = require('body-parser');
+var dbFile = "private/data/sqlite.db";
 
-const port = 5000;
+var port = 5000;
 
 // loads our libraries
 
-const app = express();
+var app = express();
 
-const bcrypt = require('bcryptjs')
-const saltRounds = 10
+var bcrypt = require('bcryptjs')
+var saltRounds = 10
 
-const publicDirectoryPath = (path.join(__dirname, 'public'))
-const viewsPath = path.join(__dirname, 'public/templates/views')
-const partialsPath = path.join(__dirname, 'public/templates/partials')
-const utilitiesPath = path.join(__dirname, 'public/utilities')
+var publicDirectoryPath = (path.join(__dirname, '/public/'))
+var viewsPath = path.join(__dirname, 'public/templates/views')
+var partialsPath = path.join(__dirname, 'public/templates/partials')
+var utilitiesPath = path.join(__dirname, 'public/utilities')
 
 app.set('view engine', 'hbs')
 app.set('views', viewsPath)
@@ -25,15 +25,14 @@ hbs.registerPartials(partialsPath)
 app.use(express.static(publicDirectoryPath))
     // Tells 'express' that you're utilising HBS and the folder structure for which you've set up your HBS paths
 
-
 // creates a table of users/passcodes unless one already exists
-const db = new sqlite3.Database(dbFile, err => {
+var db = new sqlite3.Database(dbFile, err => {
     if (err) {
         console.log(err.message);
     } else {
         console.log("Successful connection to the database");
-        // const sql_create = `DROP TABLE IF EXISTS Users`
-        const sql_create = `CREATE TABLE IF NOT EXISTS Users (User_ID INTEGER PRIMARY KEY AUTOINCREMENT,Username VARCHAR(100) NOT NULL,Password VARCHAR(100) NOT NULL);`;
+        // var sql_create = `DROP TABLE IF EXISTS Users`
+        var sql_create = `CREATE TABLE IF NOT EXISTS Users (User_ID INTEGER PRIMARY KEY AUTOINCREMENT,Username var CHAR(100) NOT NULL,Password var CHAR(100) NOT NULL);`;
         db.run(sql_create, err => {
             if (err) {
                 console.log(err.message);
@@ -54,12 +53,12 @@ requests the username and password from the html file
 then hashes them
 */
 app.post("/signup", (req, res) => {
-    const user = req.body.username;
-    const pass = req.body.password;
+    var user = req.body.username;
+    var pass = req.body.password;
     bcrypt.hash(pass, saltRounds, function(err, hash) {
         // console.log(hash)
-        const sql = "INSERT INTO Users (Username, Password) VALUES (?, ?)";
-        const newuser = [req.body.username, req.body.password];
+        var sql = "INSERT INTO Users (Username, Password) VALUES (?, ?)";
+        var newuser = [req.body.username, req.body.password];
         db.run(sql, [user, hash], err => {
             if (err) {
                 return console.error(err.message);
@@ -71,7 +70,7 @@ app.post("/signup", (req, res) => {
 
 /* gets the whole users database and formats it as a json file */
 app.get("/getusers", (req, res) => {
-    const sql = "SELECT * FROM Users"
+    var sql = "SELECT * FROM Users"
     db.all(sql, (err, rows) => {
         if (err) {
             return console.error(err.message);
@@ -107,7 +106,7 @@ app.get('/login', (req, res) => {
     res.render('signIn')
 })
 
-app.get('/newAccount', (req, res) => {
+app.get('/newaccount', (req, res) => {
     res.render('signUp')
 })
 
@@ -125,6 +124,10 @@ app.get(('/redacted'), (req, res) => {
 
 app.get('/autumn', (req, res) => {
     res.status(200).send('For now this is just in my API as a request but later I\'m gonna build an entire webpage dedicated to my love for you. Because it is so large I can not type it but maybe I can show it')
+})
+
+app.get(('/yoursite'), (req, res) => {
+    res.render('yoursite')
 })
 
 app.listen(process.env.PORT || port, function() {

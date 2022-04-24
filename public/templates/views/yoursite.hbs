@@ -1,0 +1,14 @@
+{{>header}}
+<body>
+    <div class="d-flex justify-content-center">
+        <label for="nameInput">Name: </label>
+        <input type="text" id="nameInput">
+        </br>
+        <button id="nameButton">Enter</button>	
+    </div>
+    <div>{{>footer}}</div>
+    <script src="/public/scripts/script.js/">
+        let name = document.getElementById('nameInput').value.toLowerCase();
+        document.getElementById("nameButton").addEventListener("click", nameButtonClicked(name))
+    </script>
+</body>
