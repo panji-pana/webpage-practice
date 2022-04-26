@@ -1,6 +1,6 @@
-# Practicing npm, hbs, node js
+# Practising npm, hbs, node js
 
-This is a site used for storing practicing concepts of random pieces of a website (signup, handlebars, deploying on a heroku site etc.)
+This is a site used for storing practising concepts of random pieces of a website (signup, handlebars, deploying on a heroku site etc.)
 
 Requires:</br>
 ∙[NPM](https://www.npmjs.com/)</br>
